@@ -1,11 +1,8 @@
-import { Inter } from 'next/font/google';
-
-const inter = Inter({ subsets: ['latin'] });
-
+import Input from '@/components/Input';
 export default function Home() {
   return (
     <>
-      <h1>Hello</h1>
+      <Input type="text" placeholder="Hello" />
     </>
   );
 }
