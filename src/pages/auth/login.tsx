@@ -1,10 +1,15 @@
 import Illustration from '@/features/login/Illustration';
 import LoginForm from '@/features/login/LoginForm';
 import { GridItem, Grid, Center } from '@chakra-ui/react';
+import type { FieldValues } from 'react-hook-form';
 
 function auth() {
+  const onSubmit = (values: FieldValues) => {
+    console.log(values);
+  };
+
   return (
-    <Grid gridTemplateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }} bg="#F9F9F9">
+    <Grid gridTemplateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }}>
       <GridItem>
         <Center minH="100vh" bg="brand.150">
           <Illustration />
@@ -12,19 +17,10 @@ function auth() {
       </GridItem>
       <GridItem>
         <Center minH="100vh">
-          <LoginForm />
+          <LoginForm onSubmit={onSubmit} />
         </Center>
       </GridItem>
     </Grid>
   );
 }
 export default auth;
-
-// <Button
-//   bgGradient="linear(to-t, brand.201,brand.200)"
-//   colorScheme="undefined"
-//   color="white"
-//   fontWeight={400}
-// >
-//   Login
-// </Button>
