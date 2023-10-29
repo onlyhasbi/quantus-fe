@@ -43,7 +43,7 @@ function LoginForm({onSubmit}:Props) {
   return (
     <Flex justifyContent="center" alignItems="center" direction="column">
       <Image src="/assets/logo.svg" alt="logo" w={51} h={33} />
-      <Heading as="h2" fontSize="54px">
+      <Heading as="h2" fontSize="54px" color="#06122B">
         Welcome Back!
       </Heading>
       <Text
@@ -51,6 +51,7 @@ function LoginForm({onSubmit}:Props) {
         w="245px"
         textAlign="center"
         lineHeight="24px"
+        color="#818896"
         mt="5px"
       >
         You’ve been missed,
