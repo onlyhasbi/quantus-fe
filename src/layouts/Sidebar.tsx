@@ -13,6 +13,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { HomeIcon } from '@/assets/HomeIcon';
 import { AssetIcon } from '@/assets/AssetIcon';
+import { LogoutIcon } from '@/assets/LogoutIcon';
 
 const sidebarMenu = [
   {
@@ -84,8 +85,8 @@ const Sidebar = () => {
         })}
         <Link href="auth/login" style={{ marginTop: 'full' }}>
           <HStack paddingY="12px" gap="7px" justifyContent="center">
-            {/* {<Icon color='brand.1' />} */}
             <Text color="brand.1">Logout</Text>
+            {<LogoutIcon color='brand.1' />}
           </HStack>
         </Link>
       </Flex>
