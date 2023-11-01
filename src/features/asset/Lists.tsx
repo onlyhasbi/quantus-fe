@@ -1,20 +1,14 @@
-import { Options } from '@/types';
+import { ListsProps } from '@/types';
 import {
-  List,
-  Text,
-  ListItem,
   IconButton,
   Image,
+  List,
+  ListItem,
   Stack,
+  Text,
 } from '@chakra-ui/react';
-import React from 'react';
 
-type Props = {
-  assets: Options[];
-  onUpdate: (id: string) => void;
-};
-
-function Lists({ assets, onUpdate }: Props) {
+function Lists({ assets, onUpdate }: ListsProps) {
   const handleUpdate = (id: string) => {
     onUpdate(id);
   };

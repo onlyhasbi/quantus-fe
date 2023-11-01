@@ -17,9 +17,9 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import Link from 'next/link';
+import Header from './Header';
 import { usePathname } from 'next/navigation';
 import { useRef } from 'react';
-import Header from './Header';
 
 const sidebarMenu = [
   {

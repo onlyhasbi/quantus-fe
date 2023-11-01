@@ -1,29 +1,23 @@
-import React from 'react';
+import { url } from '@/config/url';
+import { useGets } from '@/hooks/useData';
+import { AssetFormProps, AssetPayload, Options } from '@/types';
 import {
-  VStack,
-  FormControl,
-  FormErrorMessage,
-  Input,
-  Select,
-  Button,
-  Flex,
   AlertDialog,
   AlertDialogContent,
   AlertDialogOverlay,
+  Button,
+  Flex,
+  FormControl,
+  FormErrorMessage,
   HStack,
+  Input,
+  Select,
   Text,
+  VStack,
   useDisclosure,
 } from '@chakra-ui/react';
-import { FieldValues, useForm } from 'react-hook-form';
-import { url } from '@/config/url';
-import { useGets } from '@/hooks/useData';
-import { AssetPayload, InitialValues, Options } from '@/types';
-
-type Props = {
-  onSubmit: (payload: FieldValues) => void;
-  onDelete?: () => void;
-  initialValues?: InitialValues | undefined;
-};
+import React from 'react';
+import { useForm } from 'react-hook-form';
 
 const defaultValues = {
   name: '',
@@ -31,7 +25,7 @@ const defaultValues = {
   location_id: '',
 };
 
-function AssetForm({ onSubmit, onDelete, initialValues }: Props) {
+function AssetForm({ onSubmit, onDelete, initialValues }: AssetFormProps) {
   const form = useForm<AssetPayload>({ defaultValues });
   const {
     register,

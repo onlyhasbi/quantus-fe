@@ -1,5 +1,5 @@
-import { Center, Image } from '@chakra-ui/react';
 import React from 'react';
+import { Center, Image } from '@chakra-ui/react';
 
 function Splash() {
   return (

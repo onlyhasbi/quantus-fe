@@ -1,24 +1,16 @@
+import { AlertDialogProps } from '@/types';
 import {
   AlertDialog,
   AlertDialogBody,
-  AlertDialogFooter,
-  AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
-  AlertDialogCloseButton,
-  useDisclosure,
   Image,
   Text,
+  useDisclosure,
 } from '@chakra-ui/react';
 import React from 'react';
 
-type Props = {
-  open: boolean;
-  title: string;
-  message: string;
-};
-
-export function AlertDialogInfo({ open, title, message }: Props) {
+export function AlertDialogInfo({ open, title, message }: AlertDialogProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef<HTMLButtonElement>(null);
 
@@ -36,7 +28,12 @@ export function AlertDialogInfo({ open, title, message }: Props) {
       <AlertDialogOverlay onClick={onOpen}>
         <AlertDialogContent>
           <AlertDialogBody textAlign="center" padding="30px">
-            <Image src="/assets/success.svg" alt="success-image" w="185px" mx="auto" />
+            <Image
+              src="/assets/success.svg"
+              alt="success-image"
+              w="185px"
+              mx="auto"
+            />
             <Text fontSize="20px" fontWeight={600} mt="15px" mb="10px">
               {title}
             </Text>

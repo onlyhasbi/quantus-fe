@@ -1,22 +1,17 @@
-import { Chart } from '@/types';
+import { StatusChartProps } from '@/types';
 import {
   Bar,
   BarChart,
   CartesianGrid,
   Cell,
-  ResponsiveContainer,
   Tooltip,
   XAxis,
-  YAxis,
+  YAxis
 } from 'recharts';
-
-type Props = {
-  data: Chart[];
-};
 
 const colors = ['#00B6AC', '#FF7C45', '#FF6169'];
 
-function StatusChart({ data }: Props) {
+function StatusChart({ data }: StatusChartProps) {
   return (
     <BarChart
       width={870}

@@ -1,20 +1,11 @@
+import { InputSearchProps } from '@/types';
+import { Image, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
 import React from 'react';
-import {
-  Heading,
-  Input,
-  Image,
-  InputGroup,
-  InputRightElement,
-} from '@chakra-ui/react';
 
-type Props = {
-  onSearch: (value: string) => void;
-};
-function InputSearch({ onSearch }: Props) {
-
-  const handleSearch = (e:React.ChangeEvent<HTMLInputElement>) => {
-    onSearch(e.target.value)
-  }
+function InputSearch({ onSearch }: InputSearchProps) {
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onSearch(e.target.value);
+  };
 
   return (
     <>

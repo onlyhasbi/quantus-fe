@@ -1,36 +1,27 @@
-import { useReducer } from 'react';
+import { AuthPayload, LoginFormProps } from '@/types';
 import {
+  Button,
   Flex,
-  Image,
-  Heading,
-  Text,
-  VStack,
   FormControl,
   FormErrorMessage,
-  Button,
+  Heading,
+  Image,
   Input,
   InputGroup,
   InputLeftElement,
   InputRightElement,
+  Text,
+  VStack,
 } from '@chakra-ui/react';
+import { useReducer } from 'react';
 import { useForm } from 'react-hook-form';
-import type { FieldValues } from 'react-hook-form';
-
-type AuthPayload = {
-  email: string;
-  password: string;
-};
 
 const defaultValues = {
   email: '',
   password: '',
 };
 
-type Props = {
-  onSubmit: (values: FieldValues) => void;
-};
-
-function LoginForm({ onSubmit }: Props) {
+function LoginForm({ onSubmit }: LoginFormProps) {
   const [show, toggle] = useReducer((o) => !o, false);
 
   const form = useForm<AuthPayload>({ defaultValues });
