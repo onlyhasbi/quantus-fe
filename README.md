@@ -4,7 +4,7 @@ Before you begin, make sure you have the following requirements installed on you
 - Node.js
 - NPM (node package manager)
 
-How to Install
+#How to Install
 
 ```bash
 npm run dev
@@ -14,8 +14,9 @@ yarn dev
 pnpm dev
 ```
 
-Application Folder Structure
+#Application Folder Structure
 
+```bash
 ├── assets              # Image or icon assets
 ├── config              # Configuration files (theme, environment)
 ├── features            # Feature-specific code or components
@@ -33,4 +34,4 @@ Application Folder Structure
 └── utils               # Utility/helper functions
     ├── keys.ts         # Utility function for handling keys
     └── capitalize.ts   # Utility function for capitalizing strings
-
+```
