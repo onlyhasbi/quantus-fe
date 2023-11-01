@@ -38,17 +38,19 @@ function AssetForm({ onSubmit, onDelete, initialValues }: AssetFormProps) {
   const cancelRef = React.useRef<HTMLButtonElement>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  React.useEffect(() => {
-    if (initialValues) {
-      form.setValue('name', initialValues.name);
-      form.setValue('status_id', initialValues.status.id);
-      form.setValue('location_id', initialValues.location.id);
-    }
-  }, [initialValues]);
-
   const [resStatus, resLocation] = useGets([url.status, url.location]);
   const status = resStatus.isSuccess ? resStatus?.data?.results : [];
   const location = resLocation.isSuccess ? resLocation?.data?.results : [];
+
+  React.useEffect(() => {
+    if (initialValues) {
+      form.setValue('name', initialValues.name);
+      if (resStatus.isSuccess)
+        form.setValue('status_id', initialValues.status.id);
+      if (resLocation.isSuccess)
+        form.setValue('location_id', initialValues.location.id);
+    }
+  }, [initialValues, resStatus.isSuccess, resLocation.isSuccess]);
 
   React.useEffect(() => {
     if (isSubmitSuccessful) {

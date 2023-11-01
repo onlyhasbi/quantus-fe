@@ -12,12 +12,10 @@ import {
   Flex,
   HStack,
   Image,
-  Show,
   Text,
-  useDisclosure,
+  useDisclosure
 } from '@chakra-ui/react';
 import Link from 'next/link';
-import Header from './Header';
 import { usePathname } from 'next/navigation';
 import { useRef } from 'react';
 
@@ -69,9 +67,6 @@ const Sidebar = () => {
             <Image src="/assets/horizontal-logo.svg" alt="logo" />
           </Link>
         </Box>
-        <Show below="lg">
-          <Header />
-        </Show>
         <Flex
           direction="column"
           width={{ base: 'full', lg: '80%' }}

@@ -105,5 +105,5 @@ export type ListsProps = {
 export type AssetFormProps = {
   onSubmit: (payload: FieldValues) => void;
   onDelete?: () => void;
-  initialValues?: InitialValues | undefined;
+  initialValues?: InitialValues;
 };

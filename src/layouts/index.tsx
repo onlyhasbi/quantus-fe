@@ -26,13 +26,11 @@ const Layout = ({ children }: Props) => {
       <GridItem area="aside">
         <Sidebar />
       </GridItem>
-      <Show above="lg">
-        <GridItem area="nav">
-          <Container maxW="6xl">
-            <Header />
-          </Container>
-        </GridItem>
-      </Show>
+      <GridItem area="nav">
+        <Container maxW="6xl">
+          <Header />
+        </Container>
+      </GridItem>
       <GridItem area="main" overflowX="hidden">
         <Container maxW="6xl" minH="80vh">
           {children}

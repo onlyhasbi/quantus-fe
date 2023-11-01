@@ -23,15 +23,4 @@ export const theme = extendTheme({
       0: '#ffffff',
     },
   },
-  components: {
-    Input: {
-      variants: {
-        outline: {
-          bg: 'brand.50',
-          borderColor: 'brand.100',
-          fontSize: '14px',
-        },
-      },
-    },
-  },
 });

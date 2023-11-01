@@ -7,6 +7,7 @@ import {
   Button,
   Circle,
   Flex,
+  Image,
   SkeletonText,
   Stack,
   Text,
@@ -34,13 +35,13 @@ const Header = () => {
         <Stack
           direction={{ lg: 'row', base: 'column' }}
           alignItems={{ base: 'center' }}
-          gap={4}
+          gap={3}
         >
           <Circle size={{ lg: '40px', base: 75 }} bg="green.600">
             <Avatar size="40px" name="user" src="https://i.pravatar.cc/40" />
           </Circle>
 
-          <Flex direction="column" gap="2px">
+          <Flex direction="column" gap="2px" ml="3px">
             {isLoading ? (
               <>
                 <SkeletonText w="5rem" noOfLines={1} skeletonHeight="2" />
@@ -62,6 +63,7 @@ const Header = () => {
               </>
             )}
           </Flex>
+          <Image src="/assets/arrow-down.svg" alt="arrow-down-icon" />
         </Stack>
 
         <Button

@@ -44,19 +44,15 @@ function Asset() {
   const handleSubmit = (payload: FieldValues) => {
     setMessage('Data has been submitted.');
     mutateAdd(payload as AssetPayload);
-    setSearch('');
-    onClose();
   };
 
   const handleUpdate = (payload: FieldValues) => {
     setMessage('Data has been update.');
-    setSearch('');
     mutatePut(payload as AssetPayload);
   };
 
   const handleDelete = () => {
     setMessage('Data has been deleted.');
-    setSearch('');
     mutateDel();
   };
 
@@ -68,12 +64,14 @@ function Asset() {
 
   React.useEffect(() => {
     if (isPutSuccess || isDeleteSuccess || isPostSuccess) {
-      getAssets.refetch();
       setUpdateId('');
+      setSearch('');
+      onClose();
+      getAssets.refetch();
     }
   }, [getAssets.refetch, isPutSuccess, isDeleteSuccess, isPostSuccess]);
 
-  if (updateId) {
+  if (updateId && getAsset.isSuccess) {
     return (
       <Box pb="350px">
         <Text fontSize="28px" mt="44px" mb="12px" fontWeight={600}>
@@ -82,7 +80,7 @@ function Asset() {
         <AssetForm
           onSubmit={handleUpdate}
           onDelete={handleDelete}
-          initialValues={getAsset?.data}
+          initialValues={getAsset.data}
         />
       </Box>
     );
