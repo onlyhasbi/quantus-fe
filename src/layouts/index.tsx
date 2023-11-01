@@ -1,21 +1,18 @@
-import { Grid, GridItem, Box, Show } from '@chakra-ui/react';
-import { useEffect, ReactNode } from 'react';
-import Sidebar from './Sidebar';
+import Splash from '@/features/splash';
 import Header from './Header';
+import Sidebar from './Sidebar';
+import { useAuthentication } from '@/hooks/useAuthentication';
+import { Box, Container, Grid, GridItem, Show } from '@chakra-ui/react';
+import { ReactNode } from 'react';
 
 type Props = {
   children: ReactNode;
 };
 
 const Layout = ({ children }: Props) => {
-  const isAuthSuccess = true;
-  // const navigate = useNavigate();
+  const { isAuthenticated } = useAuthentication();
 
-  // useEffect(() => {
-  //   if (!isAuthSuccess) navigate('/signin', { replace: true });
-  // }, [isAuthSuccess, navigate]);
-
-  if (!isAuthSuccess) return null;
+  if (!isAuthenticated) return <Splash />;
 
   return (
     <Grid
@@ -31,11 +28,15 @@ const Layout = ({ children }: Props) => {
       </GridItem>
       <Show above="lg">
         <GridItem area="nav">
-          <Header />
+          <Container maxW="6xl">
+            <Header />
+          </Container>
         </GridItem>
       </Show>
       <GridItem area="main" overflowX="hidden">
-        <Box paddingX="20px">{children}</Box>
+        <Container maxW="6xl" minH="80vh">
+          {children}
+        </Container>
       </GridItem>
     </Grid>
   );

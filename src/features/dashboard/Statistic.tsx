@@ -1,9 +1,19 @@
 import StatisticCard from './StatisticCard';
+import StatusChart from './StatusChart';
 import { StatisticProps } from '@/types';
-import { Text, Grid, GridItem, VStack } from '@chakra-ui/react';
+import {
+  Text,
+  Grid,
+  GridItem,
+  VStack,
+  Stack,
+  Card,
+  CardHeader,
+  CardBody,
+} from '@chakra-ui/react';
 import { useId } from 'react';
 
-function Statistic({ title, info }: StatisticProps) {
+function Statistic({ title, data, info }: StatisticProps) {
   const id = useId();
 
   return (
@@ -11,10 +21,19 @@ function Statistic({ title, info }: StatisticProps) {
       <Text fontSize="32px">{title}</Text>
       <Grid templateColumns="1fr minmax(100px,150px)" gap="20px" w="full">
         <GridItem>
-          <Text fontSize="32px">Graph</Text>
+          <Card>
+            <CardHeader>
+              <Text fontSize="16px" fontWeight={600}>
+                Chart
+              </Text>
+            </CardHeader>
+            <CardBody>
+              <StatusChart data={data} />
+            </CardBody>
+          </Card>
         </GridItem>
         <GridItem>
-          <VStack spacing="10px">
+          <Stack direction="column" gap="10px" flexGrow={1} h="full">
             {info?.map(({ label, value }, index) => (
               <StatisticCard
                 key={`${id + index}`}
@@ -22,7 +41,7 @@ function Statistic({ title, info }: StatisticProps) {
                 value={value}
               />
             ))}
-          </VStack>
+          </Stack>
         </GridItem>
       </Grid>
     </VStack>

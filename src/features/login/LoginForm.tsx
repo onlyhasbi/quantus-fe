@@ -16,7 +16,6 @@ import {
 import { useForm } from 'react-hook-form';
 import type { FieldValues } from 'react-hook-form';
 
-
 type AuthPayload = {
   email: string;
   password: string;
@@ -31,12 +30,13 @@ type Props = {
   onSubmit: (values: FieldValues) => void;
 };
 
-function LoginForm({onSubmit}:Props) {
+function LoginForm({ onSubmit }: Props) {
   const [show, toggle] = useReducer((o) => !o, false);
 
   const form = useForm<AuthPayload>({ defaultValues });
   const {
     register,
+    handleSubmit,
     formState: { errors },
   } = form;
 
@@ -60,7 +60,7 @@ function LoginForm({onSubmit}:Props) {
       </Text>
 
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(onSubmit)}
         style={{ width: '308px', marginTop: '98px' }}
       >
         <VStack spacing="18px">
@@ -77,7 +77,10 @@ function LoginForm({onSubmit}:Props) {
               <Input
                 w="full"
                 id="email"
+                bg="brand.50"
+                borderColor="brand.100"
                 placeholder="Email"
+                fontSize="14px"
                 {...register('email', {
                   required: 'This form is required',
                   pattern: {
@@ -105,6 +108,9 @@ function LoginForm({onSubmit}:Props) {
               <Input
                 w="full"
                 id="password"
+                bg="brand.50"
+                borderColor="brand.100"
+                fontSize="14px"
                 type={`${show ? 'text' : 'password'}`}
                 placeholder="Password"
                 {...register('password', {

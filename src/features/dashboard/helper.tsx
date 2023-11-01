@@ -79,3 +79,13 @@ export function defaultLocation(resData: Location[] | undefined) {
     };
   });
 }
+
+export function chartStatus(status: Status[]) {
+  return status?.map((item) => ({ name: item.status.name, value: item.count }));
+}
+export function chartLocation(location: Location[]) {
+  return location?.map((item) => ({
+    name: item.location.name,
+    value: item.count,
+  }));
+}

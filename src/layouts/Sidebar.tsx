@@ -1,6 +1,8 @@
 import { AssetIcon } from '@/assets/AssetIcon';
 import { HomeIcon } from '@/assets/HomeIcon';
 import { LogoutIcon } from '@/assets/LogoutIcon';
+import { useAuthentication } from '@/hooks/useAuthentication';
+import { useLogout } from '@/hooks/useData';
 import {
   AlertDialog,
   AlertDialogContent,
@@ -15,11 +17,9 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import Link from 'next/link';
-import Header from './Header';
 import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/router';
 import { useRef } from 'react';
-import { useLogout } from '@/hooks/useData';
+import Header from './Header';
 
 const sidebarMenu = [
   {
@@ -37,14 +37,14 @@ const sidebarMenu = [
 const Sidebar = () => {
   const currentPath = usePathname();
   const cancelRef = useRef<HTMLButtonElement>(null);
-  const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { mutate } = useLogout();
 
+  const { handleSignOut } = useAuthentication();
+
   const handleLogout = () => {
     mutate();
-    router.push('auth/login');
-    onClose();
+    handleSignOut();
   };
 
   return (
@@ -76,9 +76,9 @@ const Sidebar = () => {
           direction="column"
           width={{ base: 'full', lg: '80%' }}
           paddingX={{ base: 6, lg: 0 }}
-          gap="16px"
           marginX="auto"
-          minH="110vh"
+          flexGrow={1}
+          gap="16px"
         >
           {sidebarMenu.map((item, index) => {
             const isSelected = item.path === currentPath;
@@ -101,7 +101,6 @@ const Sidebar = () => {
               </Box>
             );
           })}
-
           <HStack
             paddingY="12px"
             mt="auto"
@@ -134,7 +133,6 @@ const Sidebar = () => {
               <br />
               you have to relogin, are you sure?
             </Text>
-
             <HStack justifyContent="center">
               <Button
                 colorScheme="red"

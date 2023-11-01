@@ -2,19 +2,36 @@ import React from 'react';
 import Statistic from '@/features/dashboard/Statistic';
 import Layout from '@/layouts';
 import { Flex } from '@chakra-ui/react';
-import { useAssets } from '@/hooks/useData';
-import { defaultStatus, defaultLocation } from '@/features/dashboard/utils';
+import { useGets } from '@/hooks/useData';
+import {
+  defaultStatus,
+  defaultLocation,
+  chartStatus,
+  chartLocation,
+} from '@/features/dashboard/helper';
+import { url } from '@/config/url';
 
 export default function Home() {
-  const [resStatus, resLocation] = useAssets();
+  const [resStatus, resLocation] = useGets([
+    url.asset.status,
+    url.asset.location,
+  ]);
 
   const status = resStatus?.data?.results;
   const location = resLocation?.data?.results;
 
   return (
-    <Flex direction="column" gap="16px">
-      <Statistic title="Status" info={defaultStatus(status)} />
-      <Statistic title="Location" info={defaultLocation(location)} />
+    <Flex direction="column" gap="16px" paddingBottom="20px">
+      <Statistic
+        title="Status"
+        data={chartStatus(status)}
+        info={defaultStatus(status)}
+      />
+      <Statistic
+        title="Location"
+        data={chartLocation(location)}
+        info={defaultLocation(location)}
+      />
     </Flex>
   );
 }
