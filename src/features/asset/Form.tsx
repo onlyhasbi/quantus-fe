@@ -44,7 +44,6 @@ function AssetForm({ onSubmit, onDelete, initialValues }: AssetFormProps) {
 
   React.useEffect(() => {
     if (initialValues) {
-      console.log(initialValues);
       form.setValue('name', initialValues.name);
       form.setValue('status_id', initialValues.status.id);
       form.setValue('location_id', initialValues.location.id);

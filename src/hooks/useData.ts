@@ -1,34 +1,17 @@
 import axios from '@/lib/axios';
 import { keys } from '@/utils/keys';
-import { url } from '@/config/url';
 import {
-  useQuery,
-  useQueries,
-  useMutation,
   keepPreviousData,
+  useMutation,
+  useQueries,
+  useQuery,
 } from '@tanstack/react-query';
-import { AuthPayload } from '@/types';
 import { AxiosRequestConfig } from 'axios';
-
-export function useLogin() {
-  return useMutation({
-    mutationKey: keys(url.auth.login),
-    mutationFn: (payload: AuthPayload) =>
-      axios.post(url.auth.login, payload).then(({ data }) => data),
-  });
-}
-
-export function useLogout() {
-  return useMutation({
-    mutationKey: keys(url.auth.logout),
-    mutationFn: () => axios.post(url.auth.logout).then(({ data }) => data),
-  });
-}
 
 export function usePost<T = any>(url: string) {
   return useMutation({
     mutationKey: keys(url),
-    mutationFn: (payload: T) =>
+    mutationFn: (payload?: T) =>
       axios.post(url, payload).then(({ data }) => data),
   });
 }

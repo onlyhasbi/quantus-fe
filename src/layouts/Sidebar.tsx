@@ -1,8 +1,9 @@
 import { AssetIcon } from '@/assets/AssetIcon';
 import { HomeIcon } from '@/assets/HomeIcon';
 import { LogoutIcon } from '@/assets/LogoutIcon';
+import { url } from '@/config/url';
 import { useAuthentication } from '@/hooks/useAuthentication';
-import { useLogout } from '@/hooks/useData';
+import { usePost } from '@/hooks/useData';
 import {
   AlertDialog,
   AlertDialogContent,
@@ -13,7 +14,7 @@ import {
   HStack,
   Image,
   Text,
-  useDisclosure
+  useDisclosure,
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -36,12 +37,12 @@ const Sidebar = () => {
   const currentPath = usePathname();
   const cancelRef = useRef<HTMLButtonElement>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { mutate } = useLogout();
+  const { mutate } = usePost(url.auth.logout);
 
   const { handleSignOut } = useAuthentication();
 
   const handleLogout = () => {
-    mutate();
+    mutate(undefined);
     handleSignOut();
   };
 

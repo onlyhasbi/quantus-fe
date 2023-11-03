@@ -1,11 +1,9 @@
-
 import { deleteToken, getToken } from '@/lib/storage';
 import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
 export function useAuthentication() {
-
   const router = useRouter();
   const currentLocation = usePathname();
   const authLocation = ['/auth/login'];
