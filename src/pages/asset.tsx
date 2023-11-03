@@ -2,7 +2,7 @@ import AssetForm from '@/features/asset/Form';
 import Lists from '@/features/asset/Lists';
 import InputSearch from '@/features/asset/Search';
 import Layout from '@/layouts';
-import React, { useContext } from 'react';
+import React, { useContext, useCallback } from 'react';
 import { url } from '@/config/url';
 import { AlertDialogInfo } from '@/features/asset/Alert';
 import { useDel, useGet, usePost, usePut } from '@/hooks/useData';
@@ -20,10 +20,11 @@ function Asset() {
   const handleSearch = (value: string) => setSearch(value);
   const handleGetId = (value: string) => setUpdateId(value);
 
-  const getAssets = useGet(url.asset.base, search);
+  const getAssets = useGet(url.asset.base, search, true);
   const assets = getAssets.isSuccess ? getAssets.data.results : [];
 
   const getAsset = useGet(`${url.asset.base}/${updateId}`);
+  const asset = getAsset.isSuccess ? getAsset.data : undefined;
 
   const { mutate: mutateAdd, isSuccess: isPostSuccess } = usePost<AssetPayload>(
     url.asset.base
@@ -37,20 +38,27 @@ function Asset() {
     `${url.asset.base}/${updateId}`
   );
 
-  const handleSubmit = (payload: FieldValues) => {
+  const handleSubmit = useCallback((payload: FieldValues) => {
     setMessage('Data has been submitted.');
     mutateAdd(payload as AssetPayload);
-  };
+  }, []);
 
-  const handleUpdate = (payload: FieldValues) => {
-    setMessage('Data has been update.');
-    mutatePut(payload as AssetPayload);
-  };
+  const handleUpdate = useCallback(
+    (payload: FieldValues) => {
+      if (updateId) {
+        setMessage('Data has been update.');
+        mutatePut(payload as AssetPayload);
+      }
+    },
+    [updateId]
+  );
 
-  const handleDelete = () => {
-    setMessage('Data has been deleted.');
-    mutateDel();
-  };
+  const handleDelete = useCallback(() => {
+    if (updateId) {
+      setMessage('Data has been deleted.');
+      mutateDel();
+    }
+  }, [updateId]);
 
   React.useEffect(() => {
     if (isPutSuccess || isDeleteSuccess || isPostSuccess) {
@@ -70,7 +78,7 @@ function Asset() {
         <AssetForm
           onSubmit={handleUpdate}
           onDelete={handleDelete}
-          initialValues={getAsset.data}
+          initialValues={asset}
         />
       </Box>
     );

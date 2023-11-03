@@ -59,7 +59,11 @@ export function useGets(url: string[], config?: AxiosRequestConfig) {
   });
 }
 
-export function useGet(url: string, search: string = '') {
+export function useGet(
+  url: string,
+  search: string = '',
+  isKeep: boolean = false
+) {
   return useQuery({
     queryKey: keys(url, search),
     queryFn: () =>
@@ -70,6 +74,6 @@ export function useGet(url: string, search: string = '') {
           search,
         },
       }).then(({ data }) => data),
-    placeholderData: keepPreviousData,
+    placeholderData: isKeep ? keepPreviousData : undefined,
   });
 }
