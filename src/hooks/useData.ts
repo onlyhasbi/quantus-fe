@@ -1,7 +1,12 @@
 import axios from '@/lib/axios';
 import { keys } from '@/utils/keys';
 import { url } from '@/config/url';
-import { useQuery, useQueries, useMutation } from '@tanstack/react-query';
+import {
+  useQuery,
+  useQueries,
+  useMutation,
+  keepPreviousData,
+} from '@tanstack/react-query';
 import { AuthPayload } from '@/types';
 import { AxiosRequestConfig } from 'axios';
 
@@ -49,14 +54,22 @@ export function useGets(url: string[], config?: AxiosRequestConfig) {
       queryKey: keys(item),
       queryFn: () =>
         axios({ method: 'get', url: item, ...config }).then(({ data }) => data),
+      placeholderData: keepPreviousData,
     })),
   });
 }
 
-export function useGet(url: string, config?: AxiosRequestConfig) {
+export function useGet(url: string, search: string = '') {
   return useQuery({
-    queryKey: keys(url),
+    queryKey: keys(url, search),
     queryFn: () =>
-      axios({ method: 'get', url, ...config }).then(({ data }) => data),
+      axios({
+        method: 'get',
+        url,
+        params: {
+          search,
+        },
+      }).then(({ data }) => data),
+    placeholderData: keepPreviousData,
   });
 }

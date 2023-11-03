@@ -20,11 +20,7 @@ function Asset() {
   const handleSearch = (value: string) => setSearch(value);
   const handleGetId = (value: string) => setUpdateId(value);
 
-  const getAssets = useGet(url.asset.base, {
-    params: {
-      search,
-    },
-  });
+  const getAssets = useGet(url.asset.base, search);
   const assets = getAssets.isSuccess ? getAssets.data.results : [];
 
   const getAsset = useGet(`${url.asset.base}/${updateId}`);
@@ -55,12 +51,6 @@ function Asset() {
     setMessage('Data has been deleted.');
     mutateDel();
   };
-
-  React.useEffect(() => {
-    if (search || !search) {
-      getAssets.refetch();
-    }
-  }, [search]);
 
   React.useEffect(() => {
     if (isPutSuccess || isDeleteSuccess || isPostSuccess) {
