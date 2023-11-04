@@ -1,5 +1,5 @@
 import { url } from '@/config/url';
-import { useGets } from '@/hooks/useData';
+import { useGets } from '@/hooks/useGets';
 import { AssetFormProps, AssetPayload, Options } from '@/types';
 import {
   AlertDialog,

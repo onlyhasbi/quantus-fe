@@ -1,9 +1,7 @@
 import { AssetIcon } from '@/assets/AssetIcon';
 import { HomeIcon } from '@/assets/HomeIcon';
 import { LogoutIcon } from '@/assets/LogoutIcon';
-import { url } from '@/config/url';
-import { useAuthentication } from '@/hooks/useAuthentication';
-import { usePost } from '@/hooks/useData';
+import { useAuthentication, useLogout } from '@/hooks/useAuthentication';
 import {
   AlertDialog,
   AlertDialogContent,
@@ -37,7 +35,7 @@ const Sidebar = () => {
   const currentPath = usePathname();
   const cancelRef = useRef<HTMLButtonElement>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { mutate } = usePost(url.auth.logout);
+  const { mutate } = useLogout();
 
   const { handleSignOut } = useAuthentication();
 

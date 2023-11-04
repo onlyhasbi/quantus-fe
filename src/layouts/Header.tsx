@@ -1,5 +1,5 @@
 import { url } from '@/config/url';
-import { useGet } from '@/hooks/useData';
+import { useGet } from '@/hooks/useGets';
 import { Asset as AssetContext } from '@/store/context';
 import { capitalize } from '@/utils/capitalize';
 import {

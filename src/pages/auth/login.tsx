@@ -1,19 +1,16 @@
+import { config } from '@/config';
 import Illustration from '@/features/login/Illustration';
 import LoginForm from '@/features/login/LoginForm';
 import Splash from '@/features/splash';
-import { useEffect } from 'react';
-import { usePost } from '@/hooks/useData';
-import { AuthPayload } from '@/types';
-import { GridItem, Grid, Center } from '@chakra-ui/react';
-import { useRouter } from 'next/router';
+import { useAuthentication, useLogin } from '@/hooks/useAuthentication';
 import { setLocalStorage } from '@/lib/storage';
-import { config } from '@/config';
-import { useAuthentication } from '@/hooks/useAuthentication';
+import { AuthPayload } from '@/types';
+import { Center, Grid, GridItem } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 import type { FieldValues } from 'react-hook-form';
-import { url } from '@/config/url';
 
 function Login() {
-  const { mutate, isSuccess, data } = usePost<AuthPayload>(url.auth.login);
+  const { mutate, isSuccess, data } = useLogin();
   const router = useRouter();
 
   const onSubmit = (values: FieldValues) => {

@@ -3,6 +3,24 @@ import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
+import ApiClient from '@/service/apiClient';
+import { url } from '@/config/url';
+import { AuthPayload } from '@/types';
+import { useMutation } from '@tanstack/react-query';
+
+const logout = new ApiClient<undefined>(url.auth.logout);
+const login = new ApiClient<AuthPayload>(url.auth.login);
+
+export const useLogout = () =>
+  useMutation({
+    mutationFn: logout.post,
+  });
+
+export const useLogin = () =>
+  useMutation({
+    mutationFn: login.post,
+  });
+
 export function useAuthentication() {
   const router = useRouter();
   const currentLocation = usePathname();

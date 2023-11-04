@@ -2,7 +2,6 @@ import React from 'react';
 import Statistic from '@/features/dashboard/Statistic';
 import Layout from '@/layouts';
 import { Flex } from '@chakra-ui/react';
-import { useGets } from '@/hooks/useData';
 import {
   defaultStatus,
   defaultLocation,
@@ -10,6 +9,7 @@ import {
   chartLocation,
 } from '@/features/dashboard/helper';
 import { url } from '@/config/url';
+import { useGets } from '@/hooks/useGets';
 
 export default function Home() {
   const [resStatus, resLocation] = useGets([

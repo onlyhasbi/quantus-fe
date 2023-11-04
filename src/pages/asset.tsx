@@ -5,11 +5,12 @@ import Layout from '@/layouts';
 import React, { useContext, useCallback } from 'react';
 import { url } from '@/config/url';
 import { AlertDialogInfo } from '@/features/asset/Alert';
-import { useDel, useGet, usePost, usePut } from '@/hooks/useData';
 import { Asset as AssetContext } from '@/store/context';
 import { AssetPayload } from '@/types';
 import { Box, Text } from '@chakra-ui/react';
 import { FieldValues } from 'react-hook-form';
+import { useGet } from '@/hooks/useGets';
+import { useDel, usePost, usePut } from '@/hooks/useAsset';
 
 function Asset() {
   const [search, setSearch] = React.useState('');
@@ -26,17 +27,9 @@ function Asset() {
   const getAsset = useGet(`${url.asset.base}/${updateId}`);
   const asset = getAsset.isSuccess ? getAsset.data : undefined;
 
-  const { mutate: mutateAdd, isSuccess: isPostSuccess } = usePost<AssetPayload>(
-    url.asset.base
-  );
-
-  const { mutate: mutatePut, isSuccess: isPutSuccess } = usePut<AssetPayload>(
-    `${url.asset.base}/${updateId}`
-  );
-
-  const { mutate: mutateDel, isSuccess: isDeleteSuccess } = useDel(
-    `${url.asset.base}/${updateId}`
-  );
+  const { mutate: mutateAdd, isSuccess: isPostSuccess } = usePost();
+  const { mutate: mutatePut, isSuccess: isPutSuccess } = usePut();
+  const { mutate: mutateDel, isSuccess: isDeleteSuccess } = useDel();
 
   const handleSubmit = useCallback((payload: FieldValues) => {
     setMessage('Data has been submitted.');
@@ -47,7 +40,7 @@ function Asset() {
     (payload: FieldValues) => {
       if (updateId) {
         setMessage('Data has been update.');
-        mutatePut(payload as AssetPayload);
+        mutatePut({ data: payload as AssetPayload, id: updateId });
       }
     },
     [updateId]
@@ -56,7 +49,7 @@ function Asset() {
   const handleDelete = useCallback(() => {
     if (updateId) {
       setMessage('Data has been deleted.');
-      mutateDel();
+      mutateDel(updateId);
     }
   }, [updateId]);
 
