@@ -1,9 +1,9 @@
 import Splash from '@/features/splash';
+import { useAuthentication } from '@/hooks/useAuthentication';
+import { Container, Grid, GridItem } from '@chakra-ui/react';
+import { ReactNode } from 'react';
 import Header from './Header';
 import Sidebar from './Sidebar';
-import { useAuthentication } from '@/hooks/useAuthentication';
-import { Box, Container, Grid, GridItem, Show } from '@chakra-ui/react';
-import { ReactNode } from 'react';
 
 type Props = {
   children: ReactNode;
