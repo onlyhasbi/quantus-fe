@@ -7,11 +7,12 @@ import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
 const apiClient = new ApiClient<AssetsResponse>(url.asset.base);
 export const useGetAllAsset = (search: string = '') =>
   useInfiniteQuery<AssetsResponse>({
-    queryKey: keys(url.asset.base, search),
+    queryKey: keys('get-asssets', search),
     queryFn: ({ pageParam = 1 }) =>
       apiClient.getAll({ params: { search, page: pageParam, page_size: 6 } }),
     getNextPageParam: (lastPage, allPage) =>
       lastPage.page < lastPage.page_count ? allPage.length + 1 : undefined,
     initialPageParam: 1,
-    //staleTime: 24 * 60 * 60 * 1000, //24hrs
+    staleTime: 24 * 60 * 60 * 1000, //24hrs
+    placeholderData: keepPreviousData,
   });
