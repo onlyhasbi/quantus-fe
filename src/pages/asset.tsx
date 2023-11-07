@@ -1,14 +1,8 @@
+import { AlertDialogInfo } from '@/features/asset/Alert';
 import AssetForm from '@/features/asset/Form';
 import Lists from '@/features/asset/Lists';
 import InputSearch from '@/features/asset/Search';
-import Layout from '@/layouts';
-import React, { useContext, useCallback } from 'react';
-import { url } from '@/config/url';
-import { AlertDialogInfo } from '@/features/asset/Alert';
-import { Asset as AssetContext } from '@/store/context';
-import { AssetPayload, AssetsScrollResponse, Options } from '@/types';
-import { Box, Text } from '@chakra-ui/react';
-import { FieldValues } from 'react-hook-form';
+import { flatArray, getLengthAssets } from '@/features/asset/helper';
 import {
   useAddAsset,
   useDeleteAsset,
@@ -16,7 +10,12 @@ import {
   useGetAsset,
   useUpdateAsset,
 } from '@/hooks/assets';
-import { flatArray, getLengthAssets } from '@/features/asset/helper';
+import Layout from '@/layouts';
+import { Asset as AssetContext } from '@/store/context';
+import { AssetPayload, AssetsScrollResponse } from '@/types';
+import { Box, Text } from '@chakra-ui/react';
+import React, { useCallback, useContext } from 'react';
+import { FieldValues } from 'react-hook-form';
 
 function Asset() {
   const [search, setSearch] = React.useState('');
