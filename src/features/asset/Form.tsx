@@ -1,5 +1,5 @@
 import { url } from '@/config/url';
-import { useGets } from '@/hooks/useGets';
+import { useGetAll } from '@/hooks/useGetAll';
 import { AssetFormProps, AssetPayload, Options } from '@/types';
 import {
   AlertDialog,
@@ -38,7 +38,7 @@ function AssetForm({ onSubmit, onDelete, initialValues }: AssetFormProps) {
   const cancelRef = React.useRef<HTMLButtonElement>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const [resStatus, resLocation] = useGets([url.status, url.location]);
+  const [resStatus, resLocation] = useGetAll([url.status, url.location]);
   const status = resStatus.isSuccess ? resStatus?.data?.results : [];
   const location = resLocation.isSuccess ? resLocation?.data?.results : [];
 

@@ -5,19 +5,7 @@ import { useMutation } from '@tanstack/react-query';
 
 const apiClient = new ApiClient<AssetPayload>(url.asset.base);
 
-export const usePost = () =>
+export const useAddAsset = () =>
   useMutation({
     mutationFn: apiClient.post,
   });
-
-export const usePut = () => {
-  return useMutation({
-    mutationFn: apiClient.put,
-  });
-};
-
-export const useDel = () => {
-  return useMutation({
-    mutationFn: apiClient.delete,
-  });
-};

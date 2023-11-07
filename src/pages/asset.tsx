@@ -6,11 +6,17 @@ import React, { useContext, useCallback } from 'react';
 import { url } from '@/config/url';
 import { AlertDialogInfo } from '@/features/asset/Alert';
 import { Asset as AssetContext } from '@/store/context';
-import { AssetPayload } from '@/types';
+import { AssetPayload, AssetsScrollResponse, Options } from '@/types';
 import { Box, Text } from '@chakra-ui/react';
 import { FieldValues } from 'react-hook-form';
-import { useGet } from '@/hooks/useGets';
-import { useDel, usePost, usePut } from '@/hooks/useAsset';
+import {
+  useAddAsset,
+  useDeleteAsset,
+  useGetAllAsset,
+  useGetAsset,
+  useUpdateAsset,
+} from '@/hooks/assets';
+import { flatArray, getLengthAssets } from '@/features/asset/helper';
 
 function Asset() {
   const [search, setSearch] = React.useState('');
@@ -21,15 +27,21 @@ function Asset() {
   const handleSearch = (value: string) => setSearch(value);
   const handleGetId = (value: string) => setUpdateId(value);
 
-  const getAssets = useGet(url.asset.base, search, true);
-  const assets = getAssets.isSuccess ? getAssets.data.results : [];
+  const { data, fetchNextPage, hasNextPage, refetch } = useGetAllAsset(search);
 
-  const getAsset = useGet(`${url.asset.base}/${updateId}`);
+  const handleScroll = {
+    assets: flatArray(data as AssetsScrollResponse),
+    length: getLengthAssets(data as AssetsScrollResponse),
+    nextPage: () => fetchNextPage(),
+    hasNext: hasNextPage,
+  };
+
+  const getAsset = useGetAsset(updateId);
   const asset = getAsset.isSuccess ? getAsset.data : undefined;
 
-  const { mutate: mutateAdd, isSuccess: isPostSuccess } = usePost();
-  const { mutate: mutatePut, isSuccess: isPutSuccess } = usePut();
-  const { mutate: mutateDel, isSuccess: isDeleteSuccess } = useDel();
+  const { mutate: mutateAdd, isSuccess: isPostSuccess } = useAddAsset();
+  const { mutate: mutatePut, isSuccess: isPutSuccess } = useUpdateAsset();
+  const { mutate: mutateDel, isSuccess: isDeleteSuccess } = useDeleteAsset();
 
   const handleSubmit = useCallback((payload: FieldValues) => {
     setMessage('Data has been submitted.');
@@ -58,9 +70,9 @@ function Asset() {
       setUpdateId('');
       setSearch('');
       onClose();
-      getAssets.refetch();
+      refetch();
     }
-  }, [getAssets.refetch, isPutSuccess, isDeleteSuccess, isPostSuccess]);
+  }, [refetch, isPutSuccess, isDeleteSuccess, isPostSuccess]);
 
   if (updateId && getAsset.isSuccess) {
     return (
@@ -98,7 +110,7 @@ function Asset() {
           List Asset
         </Text>
         <InputSearch onSearch={handleSearch} />
-        <Lists assets={assets} onUpdate={handleGetId} />
+        <Lists onScroll={handleScroll} onUpdate={handleGetId} />
       </Box>
       <AlertDialogInfo
         open={isPostSuccess || isPutSuccess || isDeleteSuccess}

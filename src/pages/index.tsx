@@ -9,10 +9,10 @@ import {
   chartLocation,
 } from '@/features/dashboard/helper';
 import { url } from '@/config/url';
-import { useGets } from '@/hooks/useGets';
+import { useGetAll } from '@/hooks/useGetAll';
 
 export default function Home() {
-  const [resStatus, resLocation] = useGets([
+  const [resStatus, resLocation] = useGetAll([
     url.asset.status,
     url.asset.location,
   ]);

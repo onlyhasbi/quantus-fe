@@ -1,14 +1,19 @@
 import { ListsProps } from '@/types';
 import {
+  Center,
   IconButton,
   Image,
   List,
   ListItem,
+  Spinner,
   Stack,
   Text,
 } from '@chakra-ui/react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
-function Lists({ assets, onUpdate }: ListsProps) {
+function Lists({ onScroll, onUpdate }: ListsProps) {
+  const { assets, length, nextPage, hasNext } = onScroll;
+
   const handleUpdate = (id: string) => {
     onUpdate(id);
   };
@@ -20,6 +25,7 @@ function Lists({ assets, onUpdate }: ListsProps) {
 
   return (
     <List
+      id="scrollable"
       bg="#fff"
       mt="12px"
       p="10px"
@@ -28,39 +34,51 @@ function Lists({ assets, onUpdate }: ListsProps) {
       maxH="380px"
       overflowY="scroll"
     >
-      {assets.map((item, index) => (
-        <ListItem
-          key={item.id}
-          borderBottom={handleDivide(assets.length - 1, index)}
-          borderColor="brand.4"
-          cursor="pointer"
-        >
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-            p="12px"
+      <InfiniteScroll
+        dataLength={length}
+        hasMore={hasNext}
+        next={nextPage}
+        loader={
+          <Center>
+            <Spinner />
+          </Center>
+        }
+        scrollableTarget="scrollable"
+      >
+        {assets.map((item, index) => (
+          <ListItem
+            key={item.id}
+            borderBottom={handleDivide(assets.length - 1, index)}
+            borderColor="brand.4"
+            cursor="pointer"
           >
-            <Stack direction="column" gap="2px">
-              <Text fontSize="14px" fontWeight={500} color="brand.1">
-                Asset Name
-              </Text>
-              <Text fontSize="16px" fontWeight={600} color="brand.2">
-                {item.name}
-              </Text>
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+              p="12px"
+            >
+              <Stack direction="column" gap="2px">
+                <Text fontSize="14px" fontWeight={500} color="brand.1">
+                  Asset Name
+                </Text>
+                <Text fontSize="16px" fontWeight={600} color="brand.2">
+                  {item.name}
+                </Text>
+              </Stack>
+              <IconButton
+                size="sm"
+                onClick={() => handleUpdate(item.id)}
+                bgGradient="linear(to-t, brand.201, brand.200)"
+                colorScheme="undefined"
+                aria-label="edit-icon"
+                icon={<Image src="/assets/pencil.svg" w="16px" h="16px" />}
+                isRound
+              />
             </Stack>
-            <IconButton
-              size="sm"
-              onClick={() => handleUpdate(item.id)}
-              bgGradient="linear(to-t, brand.201, brand.200)"
-              colorScheme="undefined"
-              aria-label="edit-icon"
-              icon={<Image src="/assets/pencil.svg" w="16px" h="16px" />}
-              isRound
-            />
-          </Stack>
-        </ListItem>
-      ))}
+          </ListItem>
+        ))}
+      </InfiniteScroll>
     </List>
   );
 }

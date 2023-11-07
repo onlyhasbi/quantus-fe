@@ -1,5 +1,4 @@
-import { url } from '@/config/url';
-import { useGet } from '@/hooks/useGets';
+import { useGet } from '@/hooks/useHeader';
 import { Asset as AssetContext } from '@/store/context';
 import { capitalize } from '@/utils/capitalize';
 import {
@@ -16,7 +15,7 @@ import { usePathname } from 'next/navigation';
 import { useContext } from 'react';
 
 const Header = () => {
-  const { data, isLoading, isSuccess } = useGet(url.auth.me);
+  const { data, isLoading, isSuccess } = useGet();
   const { onOpen } = useContext(AssetContext);
   const isAsset = usePathname() === '/asset';
 
